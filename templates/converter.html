@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="msg errors">
+    <p class="msg"></p>
+</div>
+
+<div class="form-container">
+    <form action="/results" method="POST">
+
+        <label for="from">
+            <input type="text" name="from" class="from-value" placeholder="ex USD">
+        </label>
+        <label for="to">
+            <input type="text" name="to" class="to-value" placeholder="ex USD">
+        </label>
+        <label for="amount">
+            <input type="text" name="amount" class="amount-value" placeholder="100">
+        </label>
+        <button type="submit">
+            Submit!
+        </button>
+
+    </form>
+</div>
+
+{%endblock%}
