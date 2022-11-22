@@ -6,3 +6,7 @@ c_rates = CurrencyRates()
 
 c_symbol = CurrencyCodes()
 
+
+
+
+

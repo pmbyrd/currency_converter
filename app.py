@@ -5,7 +5,9 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from converter import Currency_Converter
 
-# from forex
+from forex import c_rates, c_symbol
+
+ 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "abc123"
@@ -21,14 +23,14 @@ toolbar = DebugToolbarExtension(app)
 @app.route("/")
 def show_home():
     """Shows the home page and the form """
-    ("######################")
+   
     return render_template("converter.html")
 
 @app.route("/results")
 def show_results():
     """Handles the request to show the converted results"""
     #if the convert currency was valid, render the results on this page the 
-    print("#############")
+    
     return redirect("/results")
 
 
@@ -44,18 +46,22 @@ def handles_form():
     res_to = request.form["to"]
     res_amount = request.form["amount"]
    
-    import pdb
-    pdb.set_trace()
+    converter = Currency_Converter(res_from, res_to, res_amount)
+    
+    response = converter.check_is_valid(res_from, res_to, res_amount)
+
+    #display messages to the screen
+    # if response:
+    #     flash
+
+    result = converter.get_rate_result(res_from, res_to, res_amount)
+   
+    symbol = converter.get_symbol(res_to)
 
 
-    #get the responses from forex
 
-    #get the result and append it to the page
-
-
-    #pass the variables into the template
- 
-    return render_template("results.html")
+    #pass the variables into the template   
+    return render_template("results.html", symbol=symbol, result=result )
 
 
 @app.route("/go-home")
