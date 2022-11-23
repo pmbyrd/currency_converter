@@ -1,6 +1,6 @@
 # Whose Currency is it Anyway
 
-This application takes three inputs
+This application takes three inputs:
 
 * From currency
 * To currency
