@@ -1,6 +1,6 @@
 # set up converter that will three inputs 
 # import forex and and methods needed
-from forex_python.converter import CurrencyRates, CurrencyCodes
+from forex_python.converter import CurrencyRates, CurrencyCodes, Decimal
 
 from forex import c_rates, c_symbol
 
@@ -28,30 +28,45 @@ class Currency_Converter:
     
     def get_values(self):
         """Shows the values from handling in other methods"""
-        values = self.from_curr.upper(), self.to_curr.upper(), self.amount
+        values = self.from_curr.upper(), self.to_curr.upper(), Decimal(self.amount)
         return values
 
     def get_rate_result(self, from_curr, to_curr, amount):
         """Substitues the key/value pair in to a string to be converted by forex"""
-        result = c_rates.convert(from_curr, to_curr, amount)
-        
+        converter_amount = c_rates.convert(from_curr, to_curr, amount)
+        result = round(converter_amount, 2)
+
         return result
     
 
     def check_is_valid(self, from_curr, to_curr, amount):
         """Checks if values are valid, if not displays error message"""
-        rates = c_rates.get_rates("USD")
-
-        if not from_curr in rates:
-            msg = f"Not a valid code:{from_curr}"
-            return msg
-        if not to_curr in rates:
+        rates_dict = c_rates.get_rates("USD")
+        rates = rates_dict.keys()
+         
+        # initialize a messages lst to flash to the page if error message 
+        
+        # check if a value is not valid based off required conditions
+        if from_curr in rates:
+            return 
+        else:
+            msg = f"Not a valid code:{from_curr}"          
+           
+        if to_curr in rates:
+            return
+        else:
             msg = f"Not a valid code:{to_curr}"
-            return msg
+                    
+           
+        if isinstance(amount, Decimal):
+            return
+        else:
+            msg = f"{amount} is not a valid amount"      
 
-        if not isinstance(amount, int):
-            msg = f"{amount} is not a valid amount"
-            return msg
+        #the value did not meet requirements, if no messages, return if message display msg
+        if msg:
+            return msg 
+     
 
           
     def get_symbol(self, to_curr):

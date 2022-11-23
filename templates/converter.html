@@ -1,20 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="msg errors">
-    <p class="msg"></p>
-</div>
+
 
 <div class="form-container">
-    <form action="/results" method="POST">
+    <h3 class="title">Forex Converter</h3>
 
-        <label for="from">
+<div class="msg errors">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+    <ul class="flashes">
+        {% for msg in messages %}
+        <li>{{msg}}</li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+   {% endwith %}
+</div>
+    <form class="converter-form" action="/results" method="POST">
+
+        <label for="from">Currency From
             <input type="text" name="from" class="from-value" placeholder="ex USD">
         </label>
-        <label for="to">
-            <input type="text" name="to" class="to-value" placeholder="ex USD">
+        <label for="to">Currency To
+            <input type="text" name="to" class="to-value" placeholder="ex GBP">
         </label>
-        <label for="amount">
+        <label for="amount">Amount
             <input type="text" name="amount" class="amount-value" placeholder="100">
         </label>
         <button type="submit">

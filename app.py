@@ -5,15 +5,14 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from converter import Currency_Converter
 
-from forex import c_rates, c_symbol
+
 
  
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "abc123"
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
-app.config['TESTING'] = True
-app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
+
 app.debug = True
 
 toolbar = DebugToolbarExtension(app)
@@ -23,7 +22,7 @@ toolbar = DebugToolbarExtension(app)
 @app.route("/")
 def show_home():
     """Shows the home page and the form """
-   
+
     return render_template("converter.html")
 
 @app.route("/results")
@@ -42,25 +41,28 @@ def handles_form():
     #initialize the variables that will be passed into the template
     #get the inputs from the page
    
-    res_from = request.form["from"]
-    res_to = request.form["to"]
-    res_amount = request.form["amount"]
+    res_from = request.form.get("from")
+    res_to = request.form.get("to")
+    res_amount = request.form.get("amount")
    
     converter = Currency_Converter(res_from, res_to, res_amount)
+
+    values = converter.get_values()
+
+    # check = converter.check_is_valid
+
+    # msg = check(*values)
     
-    response = converter.check_is_valid(res_from, res_to, res_amount)
-
-    #display messages to the screen
-    # if response:
-    #     flash
-
-    result = converter.get_rate_result(res_from, res_to, res_amount)
-   
+    # import pdb
+    # pdb.set_trace()
+    # if msg:
+    #     flash(msg)
+    #     return redirect("/")
+    
+ 
+    result = converter.get_rate_result(*values)
     symbol = converter.get_symbol(res_to)
-
-
-
-    #pass the variables into the template   
+            #pass the variables into the template   
     return render_template("results.html", symbol=symbol, result=result )
 
 
