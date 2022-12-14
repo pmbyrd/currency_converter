@@ -1,7 +1,7 @@
 #import necessary methods and set up configs
 from flask import Flask, request, render_template, redirect, flash, session, jsonify
 
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
 from converter import Currency_Converter
 
@@ -15,7 +15,7 @@ app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 
 app.debug = True
 
-toolbar = DebugToolbarExtension(app)
+# toolbar = DebugToolbarExtension(app)
 
 
 
