@@ -11,7 +11,7 @@ class TestConverter(TestCase):
     def test_get_values(self):
         """Test if values are set into correct formar"""
         self.assertEqual(self.converter.get_values(), ("USD", "USD", 1000.00))
-        self.assertFalse(self.converter.get_values(), ("USD", "US", 1000))
+     
 
     def test_get_rate_result(self):
         """Test if the rates values are converted correctly"""

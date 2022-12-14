@@ -19,24 +19,25 @@ class ConverterViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('<h3 class="title">Forex Converter</h3>', html)
 
-    def test_show_result_page(self):
-        """Test result page route"""
+    def test_results_route(self):
+        """Test results page route"""
         with app.test_client() as client:
             resp = client.get('/results')
             html = resp.get_data(as_text=True)
 
-            self.assertEqual(resp.status_code, 200)   
-            self.assertIn('<div class="results-container">', html)
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn(f"""<button type="submit">Home</button>""", html)
     
 
     def test_form_submit(self):
         """Test if the results were submitted and posted to the page"""
         with app.test_client() as client:
-            resp = client.post('/results', data={"from", "USD"})
-            html = resp.get_data(as_text=True)
-
+            resp = client.post('/results', data={"from": "USD", "to": "USD", "amount": "100"})
+            html = resp.get_data(as_text=True)   
+                     
             self.assertEqual(resp.status_code, 200)
-            self.assertIn("$100", html)
+            self.assertIn(f"""<p class="result">The result is $100</p>""", html)
+   
     
     
         

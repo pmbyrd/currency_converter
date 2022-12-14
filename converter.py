@@ -44,37 +44,28 @@ class Currency_Converter:
         rates_dict = c_rates.get_rates("USD")
         rates = rates_dict.keys()
          
-        # initialize a messages lst to flash to the page if error message 
-        
-        # check if a value is not valid based off required conditions
-        if from_curr in rates:
-            return 
-        else:
-            msg = f"Not a valid code:{from_curr}"          
-           
-        if to_curr in rates:
-            return
-        else:
-            msg = f"Not a valid code:{to_curr}"
-                    
-           
-        if isinstance(amount, Decimal):
-            return
-        else:
-            msg = f"{amount} is not a valid amount"      
-
-        #the value did not meet requirements, if no messages, return if message display msg
-        if msg:
-            return msg 
+        if from_curr not in rates:
+            msg = f"Invalid currency {from_curr}. Please try again."
+            return msg
      
-
+        elif to_curr not in rates:
+            msg = f"Invalid currency {to_curr}. Please try again."
+            return msg
+        
+        elif not isinstance(amount, Decimal):
+            msg = "Please enter a valid amount"
+            return msg
           
     def get_symbol(self, to_curr):
         """Gets the currency symbol from the datebase"""
         symbol = c_symbol.get_symbol(to_curr)
         return symbol
-        
 
+# converter = Currency_Converter("USD", "EUR", 100).check_is_valid()
+# values = converter.get_values()
+# print(values)
+
+# converter.check_is_valid()
 
 
 

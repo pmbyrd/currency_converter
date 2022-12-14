@@ -28,9 +28,9 @@ def show_home():
 @app.route("/results")
 def show_results():
     """Handles the request to show the converted results"""
-    #if the convert currency was valid, render the results on this page the 
+    #if the convert currency is valid, render the results on this page the 
     
-    return redirect("/results")
+    return render_template("results.html")
 
 
 #get the values to be converted for the results
@@ -49,27 +49,22 @@ def handles_form():
 
     values = converter.get_values()
 
-    # check = converter.check_is_valid
-
-    # msg = check(*values)
+    msg = converter.check_is_valid(res_from, res_to, res_amount)
     
-    # import pdb
-    # pdb.set_trace()
+   
+    result = converter.get_rate_result(*values)
+    symbol = converter.get_symbol(res_to)
+                #pass the variables into the template   
     # if msg:
     #     flash(msg)
     #     return redirect("/")
     
- 
-    result = converter.get_rate_result(*values)
-    symbol = converter.get_symbol(res_to)
-            #pass the variables into the template   
+    # else:
     return render_template("results.html", symbol=symbol, result=result )
 
 
 @app.route("/go-home")
 def go_home():
     """Returns the user home"""
-
-    #get the button so on click return home
 
     return redirect("/")
