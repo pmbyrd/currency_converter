@@ -6,19 +6,19 @@
 <div class="form-container">
     <h3 class="title">Forex Converter</h3>
 
-<div class="msg errors">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
+    <div class="msg errors">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
 
-    <ul class="flashes">
-        {% for msg in messages %}
-        <li>{{msg}}</li>
-        {% endfor %}
-    </ul>
+        <ul class="flashes">
+            {% for msg in messages %}
+            <li>{{msg}}</li>
+            {% endfor %}
+        </ul>
 
-    {% endif %}
-   {% endwith %}
-</div>
+        {% endif %}
+        {% endwith %}
+    </div>
     <form class="converter-form" action="/results" method="POST">
 
         <label for="from">Currency From
@@ -32,9 +32,9 @@
         </label>
 
         {% for msg in get_flashed_messages() %}
-         <div>{{ msg }}</div>
+        <div>{{ msg }}</div>
         {% endfor %}
-        
+
         <button type="submit">
             Submit!
         </button>

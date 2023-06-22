@@ -32,32 +32,70 @@ class Currency_Converter:
         return values
 
     def get_rate_result(self, from_curr, to_curr, amount):
-        """Substitues the key/value pair in to a string to be converted by forex"""
+        """Subs the key/value pair in to a string to be converted by forex"""
         converter_amount = c_rates.convert(from_curr, to_curr, amount)
         result = round(converter_amount, 2)
 
         return result
     
-
-    def check_is_valid(self, from_curr, to_curr, amount):
-        """Checks if values are valid, if not displays error message"""
+    def check_is_valid_from(self, from_curr):
+        """Checks if the from currency is valid"""
         rates_dict = c_rates.get_rates("USD")
+        from_curr = from_curr.upper()
         rates = rates_dict.keys()
-         
+        msg = None 
+
         if from_curr not in rates:
             msg = f"Invalid currency {from_curr}. Please try again."
             return msg
-     
-        elif to_curr not in rates:
-            msg = f"Invalid currency {to_curr}. Please try again."
+        else:
             return msg
         
-        elif not isinstance(amount, Decimal):
+    def check_is_valid_to(self, to_curr):
+        """Checks if the to currency is valid"""
+        rates_dict = c_rates.get_rates("USD")
+        to_curr = to_curr.upper()
+        rates = rates_dict.keys()
+        msg = None 
+
+        if to_curr not in rates:
+            msg = f"Invalid currency {to_curr}. Please try again."
+            return msg
+        else:
+            return msg
+        
+    def check_is_valid_amount(self, amount):
+        """Checks if the amount is valid"""
+        msg = None
+        if not isinstance(amount, int or float or Decimal):
             msg = "Please enter a valid amount"
             return msg
+        else:
+            amount = Decimal(amount)
+            return msg
+        
+        
+
+    # def check_is_valid(self, from_curr, to_curr, amount):
+    #     """Checks if values are valid, if not displays error message"""
+    #     rates_dict = c_rates.get_rates("USD")
+    #     rates = rates_dict.keys()
+    #     msg = None 
+
+    #     if from_curr not in rates:
+    #         msg = f"Invalid currency {from_curr}. Please try again."
+    #         # return msg
+     
+    #     if to_curr not in rates:
+    #         msg = f"Invalid currency {to_curr}. Please try again."
+    #         # return msg
+        
+    #     if not isinstance(amount, Decimal):
+    #         msg = "Please enter a valid amount"
+    #         # return msg
           
     def get_symbol(self, to_curr):
-        """Gets the currency symbol from the datebase"""
+        """Gets the currency symbol from the database"""
         symbol = c_symbol.get_symbol(to_curr)
         return symbol
 

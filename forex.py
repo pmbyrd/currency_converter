@@ -9,5 +9,3 @@ c_symbol = CurrencyCodes()
 rates = c_rates.get_rates("USD")
 
 rates_lst = rates.keys()
-
-
